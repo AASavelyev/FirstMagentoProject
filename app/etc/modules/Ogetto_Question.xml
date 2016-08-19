@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_Question>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_Question>
+    </modules>
+</config>

@@ -1,0 +1,10 @@
+<layout version="0.1.0">
+
+    <question_index_index>
+        <reference name="content">
+            <block type="core/template" name="question" template="oggetto/question/main.phtml">
+                <block type="oggetto_question/list" name="question.list" template="oggetto/question/list.phtml" />
+            </block>
+        </reference>
+    </question_index_index>
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_question_index>
+        <reference name="content">
+            <block type="oggetto_question/adminhtml_question" name="question.admin_list" />
+        </reference>
+    </adminhtml_question_index>
+
+    <adminhtml_question_new>
+        <update handle="adminhtml_question_edit"/>
+    </adminhtml_question_new>
+
+    <adminhtml_question_edit>
+        <reference name="content">
+            <block type="oggetto_question/adminhtml_edit" name="question.edit" />
+        </reference>
+    </adminhtml_question_edit>
+</layout>

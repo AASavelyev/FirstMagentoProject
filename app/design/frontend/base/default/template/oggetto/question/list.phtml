@@ -1,0 +1,18 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $collection = $this->getCollection(); ?>
+<div>
+    <h1><?php echo $this->__('My Custom Collection') ?></h1>
+</div>
+<?php echo $this->getPagerHtml(); ?>
+<?php if($collection->getSize()): ?>
+    <?php foreach ($collection as $_obj): ?>
+        <p><h3><?php echo $_obj->getQuestion(); ?></h3></p>
+        <p><?php echo $_obj->getAnswer() ?></p>
+    <?php endforeach; ?>
+    <script type="text/javascript">decorateTable('my-custom-table');</script>
+    <?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('The collection is empty.'); ?></p>
+<?php endif ?>
+
+
