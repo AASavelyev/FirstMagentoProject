@@ -1,4 +1,4 @@
-<layout version="0.1.0">
+<layout version="0.2.0">
 
     <question_index_index>
         <reference name="content">
@@ -7,4 +7,10 @@
             </block>
         </reference>
     </question_index_index>
+
+    <question_index_show>
+        <reference name="content">
+            <block type="oggetto_question/show" name="question.show" template="oggetto/question/show.phtml"/>
+        </reference>
+    </question_index_show>
 </layout>

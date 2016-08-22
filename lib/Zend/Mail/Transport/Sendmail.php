@@ -120,6 +120,7 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
             }
 
             set_error_handler(array($this, '_handleMailErrors'));
+
             $result = mail(
                 $this->recipients,
                 $this->_mail->getSubject(),

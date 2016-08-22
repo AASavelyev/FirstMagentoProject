@@ -87,6 +87,7 @@ class Oggetto_Question_Adminhtml_QuestionController extends Mage_Adminhtml_Contr
         $postData = $this->getRequest()->getPost();
         $question = Mage::getModel('oggetto_question/question');
         $question->setData($postData)->save();
+        $question->sendEmail($question);
         $this->_redirect('/question/index');
     }
 

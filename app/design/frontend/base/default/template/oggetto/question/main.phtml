@@ -3,7 +3,7 @@
 <?php echo $this->getChildHtml('question.list') ?>
 
 <?php if (Mage::helper('oggetto_question')->isEnabled()): ?>
-<form action="/question/index/save" method="post">
+    <form action="/question/index/save" method="post">
     <label>Email</label>
     <input type="text" name="email" >
     <br>
@@ -13,6 +13,8 @@
     <label>Your question:</label>
     <textarea name="question"></textarea>
     <br>
+        <label>Notice when answer</label>
+        <input type="checkbox" name="noticeWhenAnswer" value="false">
     <input type="submit">
-</form>
+    </form>
 <?php endif; ?>

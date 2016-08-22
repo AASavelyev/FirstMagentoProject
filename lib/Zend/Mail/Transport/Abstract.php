@@ -343,7 +343,6 @@ abstract class Zend_Mail_Transport_Abstract
         $message->setParts($this->_parts);
         $message->setMime($mime);
         $this->body = $message->generateMessage($this->EOL);
-
         // Send to transport!
         $this->_sendMail();
     }

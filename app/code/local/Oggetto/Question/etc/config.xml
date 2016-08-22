@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Oggetto_Question>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </Oggetto_Question>
     </modules>
     <frontend>
@@ -55,6 +55,20 @@
                 </setup>
             </question_setup>
         </resources>
+        <template>
+            <email>
+                <custom_email_template module="oggetto_question">
+                    <label>Template oggetto email</label>
+                    <file>notice_user_about_answer.html</file>
+                    <type>html</type>
+                </custom_email_template>
+                <custom_email_admin_template module="oggetto_question">
+                    <label>Template oggetto admin email</label>
+                    <file>notice_admin_about_question.html</file>
+                    <type>html</type>
+                </custom_email_admin_template>
+            </email>
+        </template>
     </global>
     <adminhtml>
         <layout>

@@ -1,7 +1,7 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <?php $collection = $this->getCollection(); ?>
 <div>
-    <h1><?php echo $this->__('My Custom Collection') ?></h1>
+    <h1><?php echo $this->__('Список вопросов') ?></h1>
 </div>
 <?php echo $this->getPagerHtml(); ?>
 <?php if($collection->getSize()): ?>
@@ -14,5 +14,3 @@
 <?php else: ?>
     <p><?php echo $this->__('The collection is empty.'); ?></p>
 <?php endif ?>
-
-

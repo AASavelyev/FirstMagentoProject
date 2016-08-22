@@ -57,6 +57,17 @@ class Oggetto_Question_IndexController extends Mage_Core_Controller_Front_Action
     }
 
     /**
+     * show question
+     *
+     * @return void
+     */
+    public function showAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
      * delete question by id
      *
      * @return void

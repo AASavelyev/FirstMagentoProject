@@ -53,5 +53,40 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
         $this->setData($postData)
             ->setDate(date('Y-m-d H:i:s'))
             ->save();
+        $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_admin_template');
+
+        $processedTemplate = $emailTemplate->getProcessedTemplate($postData);
+        $emailTemplate
+            ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
+            ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setTemplateSubject('Notice about question');
+        $emailTemplate->send(Mage::getStoreConfig('trans_email/ident_support/email'),
+            Mage::getStoreConfig('trans_email/ident_support/name'), $postData);
+    }
+
+    /**
+     * send email when noticeWhenAnswer is 0
+     *
+     * @param Question $question
+     * @return void
+     */
+    public function sendEmail($question)
+    {
+        if ($question->getNoticeWhenAnswer() == 0) {
+            $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_template');
+
+            $emailTemplateVariables = array();
+            $emailTemplateVariables['question'] = $question->getQuestion();
+            $emailTemplateVariables['answer'] = $question->getAnswer();
+            $emailTemplateVariables['questionId'] = $question->getQuestionId();
+
+            $processedTemplate = $emailTemplate->getProcessedTemplate($emailTemplateVariables);
+            $emailTemplate
+                ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
+                ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
+                ->setTemplateSubject('Notice about answer');
+            $emailTemplate->send($question->getEmail(), $question->getName(), $emailTemplateVariables);
+            $question->setNoticeWhenAnswer(1)->save();
+        }
     }
 }
