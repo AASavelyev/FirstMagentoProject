@@ -50,9 +50,13 @@ class Oggetto_Question_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function saveAction()
     {
-        $postData = $this->getRequest()->getPost();
-        $question = Mage::getModel('oggetto_question/question');
-        $question->saveQuestion($postData);
+        try {
+            $postData = $this->getRequest()->getPost();
+            $question = Mage::getModel('oggetto_question/question');
+            $question->saveQuestion($postData);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
         $this->_redirect('question');
     }
 
@@ -65,16 +69,5 @@ class Oggetto_Question_IndexController extends Mage_Core_Controller_Front_Action
     {
         $this->loadLayout();
         $this->renderLayout();
-    }
-
-    /**
-     * delete question by id
-     *
-     * @return void
-     */
-    public function deleteAction()
-    {
-        $id = $this->getRequest()->getParam('id');
-        delete($id);
     }
 }

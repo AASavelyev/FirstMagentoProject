@@ -5,6 +5,15 @@
         </Oggetto_Question>
     </modules>
     <frontend>
+        <translate>
+            <modules>
+                <oggetto_question>
+                    <files>
+                        <default>Oggetto_Question.csv</default>
+                    </files>
+                </oggetto_question>
+            </modules>
+        </translate>
         <routers>
             <question>
                 <use>standard</use>
@@ -51,7 +60,6 @@
             <question_setup>
                 <setup>
                     <module>Oggetto_Question</module>
-                    <class>Oggetto_Question_Model_Resource_Setup</class>
                 </setup>
             </question_setup>
         </resources>

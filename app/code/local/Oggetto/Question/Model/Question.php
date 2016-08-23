@@ -32,6 +32,8 @@
  */
 class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
 {
+    const NOTICE_WHEN_ANSWER = 1;
+    const IGNORE_ANSWER = 0;
     /**
      * init model question
      *
@@ -53,15 +55,29 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
         $this->setData($postData)
             ->setDate(date('Y-m-d H:i:s'))
             ->save();
-        $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_admin_template');
 
-        $processedTemplate = $emailTemplate->getProcessedTemplate($postData);
-        $emailTemplate
-            ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
-            ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
-            ->setTemplateSubject('Notice about question');
-        $emailTemplate->send(Mage::getStoreConfig('trans_email/ident_support/email'),
-            Mage::getStoreConfig('trans_email/ident_support/name'), $postData);
+        $this->sendEmailAboutQuestion($postData, Mage::getStoreConfig('trans_email/ident_support/email'),
+            Mage::getStoreConfig('trans_email/ident_support/name'));
+    }
+
+    /**
+     * send email when user asks
+     *
+     * @param array  $emailTemplateVariables
+     * @param string $email
+     * @param string $name
+     * @return void
+     */
+    private function sendEmailAboutQuestion($emailTemplateVariables, $email, $name)
+    {
+        $emailTemplate = Mage::getModel('core/email_template')->loadDefault('custom_email_admin_template');
+
+        $emailTemplate->getProcessedTemplate();
+        $this->sendEmail($emailTemplate, $emailTemplateVariables, [
+            'subject' => 'Notice about question',
+            'email' => $email,
+            'name' => $name
+        ]);
     }
 
     /**
@@ -70,23 +86,51 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
      * @param Question $question
      * @return void
      */
-    public function sendEmail($question)
+    public function sendNoticedEmail($question)
     {
-        if ($question->getNoticeWhenAnswer() == 0) {
+        if ($this->isNoticed($question)) {
             $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_template');
 
             $emailTemplateVariables = array();
             $emailTemplateVariables['question'] = $question->getQuestion();
             $emailTemplateVariables['answer'] = $question->getAnswer();
-            $emailTemplateVariables['questionId'] = $question->getQuestionId();
+            $emailTemplateVariables['url'] = Mage::getUrl('question/index/show', ['id' => $question->getQuestionId()]);
 
-            $processedTemplate = $emailTemplate->getProcessedTemplate($emailTemplateVariables);
-            $emailTemplate
-                ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
-                ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
-                ->setTemplateSubject('Notice about answer');
-            $emailTemplate->send($question->getEmail(), $question->getName(), $emailTemplateVariables);
-            $question->setNoticeWhenAnswer(1)->save();
+            $this->sendEmail($emailTemplate, $emailTemplateVariables, [
+                'subject' => 'Notice about answer',
+                'email' => $question->getEmail(),
+                'name' => $question->getName()
+            ]);
+            $question->setNoticeWhenAnswer(IGNORE_ANSWER)->save();
         }
+    }
+
+    /**
+     * send email with using template
+     *
+     * @param EmailTemplate $emailTemplate
+     * @param array         $emailTemplateVariables
+     * @param array         $emailToInfo
+     * @return void
+     */
+    private function sendEmail($emailTemplate, $emailTemplateVariables, $emailToInfo)
+    {
+        $emailTemplate->getProcessedTemplate($emailTemplateVariables);
+        $emailTemplate
+            ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
+            ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setTemplateSubject($emailToInfo['subject']);
+        $emailTemplate->send($emailToInfo['email'], $emailToInfo['name'], $emailTemplateVariables);
+    }
+
+    /**
+     * check if question is noticed when admin answers
+     *
+     * @param Question $question
+     * @return bool
+     */
+    private function isNoticed($question)
+    {
+        return $question->getNoticeWhenAnswer() == NOTICE_WHEN_ANSWER;
     }
 }

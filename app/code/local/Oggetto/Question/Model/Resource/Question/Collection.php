@@ -44,8 +44,9 @@ class Oggetto_Question_Model_Resource_Question_Collection extends Mage_Core_Mode
 
     /**
      * get questions for page number and size
-     * @param    $page int
-     * @param    $size int
+     *
+     * @param int $page
+     * @param int $size
      *
      * @return Oggetto_Question_Model_Resource_Question_Collection
      */
@@ -57,24 +58,14 @@ class Oggetto_Question_Model_Resource_Question_Collection extends Mage_Core_Mode
     }
 
     /**
-     * get only question with answer
+     * filter collection by have answer
      *
+     * @param bool $answered
      * @return Oggetto_Question_Model_Resource_Question_Collection
      */
-    public function answered()
+    public function addAnswerFilter($answered)
     {
-        $this->addFieldToFilter('answer', array("notnull"=>true));
-        return $this;
-    }
-
-    /**
-     * get only question without answer
-     *
-     * @return Oggetto_Question_Model_Resource_Question_Collection
-     */
-    public function withOutAnswer()
-    {
-        $this->addFieldToFilter('answer', array("notnull"=>false));
+        $this->addFieldToFilter('answer', array("notnull" => $answered));
         return $this;
     }
 

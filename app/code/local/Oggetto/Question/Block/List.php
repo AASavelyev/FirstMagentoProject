@@ -39,7 +39,7 @@ class Oggetto_Question_Block_List extends Mage_Core_Block_Template
     public function __construct()
     {
         parent::__construct();
-        $collection = Mage::getModel('oggetto_question/question')->getCollection()->answered();
+        $collection = Mage::getModel('oggetto_question/question')->getCollection()->addAnswerFilter(true);
         $this->setCollection($collection);
     }
 

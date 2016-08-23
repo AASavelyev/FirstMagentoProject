@@ -47,7 +47,7 @@ try {
             'nullable' => false,
         ), 'User name')
         ->setComment('New question table');
-    $installer->getConnection()->createTable($table);
+    $installer->getConnection()->createTable('questions');
 
     $installer->endSetup();
 } catch (Exception $e) {

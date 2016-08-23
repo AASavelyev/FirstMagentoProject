@@ -72,8 +72,12 @@ class Oggetto_Question_Adminhtml_QuestionController extends Mage_Adminhtml_Contr
      */
     public function deleteAction()
     {
-        $id = $this->getRequest()->getParam('id');
-        Mage::getModel('oggetto_question/question')->setQuestionId($id)->delete();
+        try {
+            $id = $this->getRequest()->getParam('id');
+            Mage::getModel('oggetto_question/question')->setQuestionId($id)->delete();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
         $this->_redirect('/question/index');
     }
 
@@ -84,10 +88,15 @@ class Oggetto_Question_Adminhtml_QuestionController extends Mage_Adminhtml_Contr
      */
     public function saveAction()
     {
-        $postData = $this->getRequest()->getPost();
-        $question = Mage::getModel('oggetto_question/question');
-        $question->setData($postData)->save();
-        $question->sendEmail($question);
+        try {
+            $postData = $this->getRequest()->getPost();
+            $question = Mage::getModel('oggetto_question/question');
+            $question->setData($postData)->save();
+            $question->sendNoticedEmail($question);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
         $this->_redirect('/question/index');
     }
 
@@ -111,10 +120,15 @@ class Oggetto_Question_Adminhtml_QuestionController extends Mage_Adminhtml_Contr
      */
     public function massDeleteAction()
     {
-        $ids = $this->getRequest()->getParam("question_id");
-        foreach ($ids as $id) {
-            Mage::getModel('oggetto_question/question')->setQuestionId($id)->delete();
+        try {
+            $ids = $this->getRequest()->getParam("question_id");
+            foreach ($ids as $id) {
+                Mage::getModel('oggetto_question/question')->setQuestionId($id)->delete();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
+
         $this->_redirect('/question/index');
     }
 }

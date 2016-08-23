@@ -4,5 +4,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Oggetto_Question>
+        <translations>
+            <active>true</active>
+            <codepool>local</codepool>
+        </translations>
     </modules>
 </config>
