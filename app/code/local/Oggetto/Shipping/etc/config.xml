@@ -34,11 +34,15 @@
                 <class>Oggetto_Shipping_Model</class>
             </oggetto_shipping>
         </models>
+        <helpers>
+            <oggetto_shipping>
+                <class>Oggetto_Shipping_Helper</class>
+            </oggetto_shipping>
+        </helpers>
         <resources>
             <oggetto_shipping_setup>
                 <setup>
                     <module>Oggetto_Shipping</module>
-                    <class>Oggetto_Shipping_Model_Resource_Setup</class>
                 </setup>
             </oggetto_shipping_setup>
         </resources>

@@ -72,34 +72,23 @@ class Oggetto_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
     protected function _getStandardRates(Mage_Shipping_Model_Rate_Request $request)
     {
         $api = Mage::getModel('oggetto_shipping/api_client');
-        $responce = $api->getShippingInfo(
+        $types = $api->getShippingInfo(
             $request->getDestCountryId(),
             $request->getDestRegionId(),
             $request->getDestCity()
         );
         $result = Mage::getModel('shipping/rate_result');
-        $types = array();
 
-        if ($responce['status'] != 'error') {
-            $types[] = array(
-                'type' => 'Fast',
-                'price' => $responce['prices']['fast']
-            );
-            $types[] = array(
-                'type' => 'Standard',
-                'price' => $responce['prices']['standard']
-            );
-            foreach ($types as $type) {
-                $rate = Mage::getModel('shipping/rate_result_method');
+        foreach ($types as $type) {
+            $rate = Mage::getModel('shipping/rate_result_method');
 
-                $rate->setCarrier($this->_code);
-                $rate->setCarrierTitle($this->getConfigData('title'));
-                $rate->setMethod('large');
-                $rate->setMethodTitle($type['type'] . ' delivery');
-                $rate->setPrice($this->_convertToUsd($type['price']));
-                $rate->setCost(0);
-                $result->append($rate);
-            }
+            $rate->setCarrier($this->_code);
+            $rate->setCarrierTitle($this->getConfigData('title'));
+            $rate->setMethod('large');
+            $rate->setMethodTitle($type['type'] . ' delivery');
+            $rate->setPrice($this->_convertToUsd($type['price']));
+            $rate->setCost(0);
+            $result->append($rate);
         }
 
         return $result;

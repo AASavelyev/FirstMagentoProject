@@ -80,37 +80,43 @@ class Oggetto_Shipping_Model_Api_Client
     }
 
     /**
-     * init model get shipping info
+     * get shipping info from oggetto
      *
      * @param string $countryId
      * @param string $regionId
      * @param string $city
-     * @return object
+     * @return array
      */
     public function getShippingInfo($countryId, $regionId, $city)
     {
-        $locale = new Zend_Locale('ru_RU');
-        $countries = $locale->getTranslationList('Territory', $locale->getLanguage(), 2);
+        $helper = Mage::helper('oggetto_shipping');
+        $storeAddress = $helper->getStoreAddressInfo();
 
-        $countryName = $countries[$countryId];
+        $countryName = $helper->getCountryNameByCode($countryId);
         $regionName = Mage::getModel('directory/region')->load($regionId)->getName();
 
-        $fromCountryId = Mage::getStoreConfig('shipping/origin/country_id');
-        $countryFromName = $countries[$fromCountryId];
-
-        $regionFromId = Mage::getStoreConfig('shipping/origin/region_id');
-        $regionFromName = Mage::getModel('directory/region')->load($regionFromId)->getName();
-        $cityFrom = Mage::getStoreConfig('shipping/origin/city');
-
-        return $this->_makeRequest(
+        $responce = $this->_makeRequest(
             [
-                'from_country' => $countryFromName,
-                'from_region'  => $regionFromName,
-                'from_city'    => $cityFrom,
+                'from_country' => $storeAddress['storeCountry'],
+                'from_region'  => $storeAddress['storeRegion'],
+                'from_city'    => $storeAddress['storeCity'],
                 'to_country'   => $countryName,
                 'to_region'    => $regionName,
                 'to_city'      => $city
             ]
         );
+        if ($responce['status'] == 'error') {
+            return array();
+        }
+        $types = array();
+        $types[] = array(
+            'type' => 'Fast',
+            'price' => $responce['prices']['fast']
+        );
+        $types[] = array(
+            'type' => 'Standard',
+            'price' => $responce['prices']['standard']
+        );
+        return $types;
     }
 }

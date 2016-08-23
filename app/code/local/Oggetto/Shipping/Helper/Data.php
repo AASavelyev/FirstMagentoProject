@@ -32,5 +32,36 @@
  */
 class Oggetto_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /**
+     * Get country, state and city current store
+     *
+     * @return array
+     */
+    public function getStoreAddressInfo()
+    {
+        $fromCountryId = Mage::getStoreConfig('shipping/origin/country_id');
+        $countryFromName = $this->getCountryNameByCode($fromCountryId);
 
+        $regionFromId = Mage::getStoreConfig('shipping/origin/region_id');
+        $regionFromName = Mage::getModel('directory/region')->load($regionFromId)->getName();
+        $cityFrom = Mage::getStoreConfig('shipping/origin/city');
+        return array(
+            'storeCountry' => $countryFromName,
+            'storeRegion' => $regionFromName,
+            'storeCity' => $cityFrom
+        );
+    }
+
+    /**
+     * Get country name in russian by code
+     *
+     * @param string $code
+     * @return string
+     */
+    public function getCountryNameByCode($code)
+    {
+        $locale = new Zend_Locale('ru_RU');
+        $countries = $locale->getTranslationList('Territory', $locale->getLanguage(), 2);
+        return $countries[$code];
+    }
 }
