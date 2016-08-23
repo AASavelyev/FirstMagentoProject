@@ -82,41 +82,18 @@ class Oggetto_Shipping_Model_Api_Client
     /**
      * get shipping info from oggetto
      *
-     * @param string $countryId
-     * @param string $regionId
-     * @param string $city
+     * @param array $request
      * @return array
      */
-    public function getShippingInfo($countryId, $regionId, $city)
+    public function getShippingInfo($request)
     {
-        $helper = Mage::helper('oggetto_shipping');
-        $storeAddress = $helper->getStoreAddressInfo();
-
-        $countryName = $helper->getCountryNameByCode($countryId);
-        $regionName = Mage::getModel('directory/region')->load($regionId)->getName();
-
-        $responce = $this->_makeRequest(
-            [
-                'from_country' => $storeAddress['storeCountry'],
-                'from_region'  => $storeAddress['storeRegion'],
-                'from_city'    => $storeAddress['storeCity'],
-                'to_country'   => $countryName,
-                'to_region'    => $regionName,
-                'to_city'      => $city
-            ]
-        );
-        if ($responce['status'] == 'error') {
+        $response = $this->_makeRequest($request);
+        if ($response['status'] == 'error') {
             return array();
         }
-        $types = array();
-        $types[] = array(
-            'type' => 'Fast',
-            'price' => $responce['prices']['fast']
-        );
-        $types[] = array(
-            'type' => 'Standard',
-            'price' => $responce['prices']['standard']
-        );
-        return $types;
+        return [
+            ['type' => 'Fast', 'price' => $response['prices']['fast']],
+            ['type' => 'Standard', 'price' => $response['prices']['standard']],
+        ];
     }
 }

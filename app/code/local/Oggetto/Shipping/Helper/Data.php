@@ -43,7 +43,7 @@ class Oggetto_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
         $countryFromName = $this->getCountryNameByCode($fromCountryId);
 
         $regionFromId = Mage::getStoreConfig('shipping/origin/region_id');
-        $regionFromName = Mage::getModel('directory/region')->load($regionFromId)->getName();
+        $regionFromName = $this->getRegionName($regionFromId);
         $cityFrom = Mage::getStoreConfig('shipping/origin/city');
         return array(
             'storeCountry' => $countryFromName,
@@ -63,5 +63,16 @@ class Oggetto_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
         $locale = new Zend_Locale('ru_RU');
         $countries = $locale->getTranslationList('Territory', $locale->getLanguage(), 2);
         return $countries[$code];
+    }
+
+    /**
+     * Get region name by id
+     *
+     * @param string $regionId
+     * @return string
+     */
+    public function getRegionName($regionId)
+    {
+        return Mage::getModel('directory/region')->load($regionId)->getName();
     }
 }

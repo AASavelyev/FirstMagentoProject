@@ -72,10 +72,17 @@ class Oggetto_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
     protected function _getStandardRates(Mage_Shipping_Model_Rate_Request $request)
     {
         $api = Mage::getModel('oggetto_shipping/api_client');
+        $helper = Mage::helper('oggetto_shipping');
+        $storeAddress = $helper->getStoreAddressInfo();
         $types = $api->getShippingInfo(
-            $request->getDestCountryId(),
-            $request->getDestRegionId(),
-            $request->getDestCity()
+            [
+                'from_country' => $storeAddress['storeCountry'],
+                'from_region'  => $storeAddress['storeRegion'],
+                'from_city'    => $storeAddress['storeCity'],
+                'to_country'   => $helper->getCountryNameByCode($request->getDestCountryId()),
+                'to_region'    => $helper->getRegionName($request->getDestRegionId()),
+                'to_city'      => $request->getDestCity()
+            ]
         );
         $result = Mage::getModel('shipping/rate_result');
 
