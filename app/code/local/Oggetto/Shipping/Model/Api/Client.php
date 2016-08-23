@@ -79,7 +79,6 @@ class Oggetto_Shipping_Model_Api_Client
         return json_decode($response->getBody(), true);
     }
 
-
     /**
      * init model get shipping info
      *
