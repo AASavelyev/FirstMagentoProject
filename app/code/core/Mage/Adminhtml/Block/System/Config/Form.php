@@ -460,7 +460,12 @@ class Mage_Adminhtml_Block_System_Config_Form extends Mage_Adminhtml_Block_Widge
                             }
                         }
                     } else {
-                        $optionArray = $sourceModel->toOptionArray($fieldType == 'multiselect');
+                        //$optionArray = $sourceModel->toOptionArray($fieldType == 'multiselect');
+                        if(is_object($sourceModel)){
+                            $optionArray = $sourceModel->toOptionArray($fieldType == 'multiselect');
+                        } else {
+                            Mage::log($element->source_model);
+                        }
                     }
                     $field->setValues($optionArray);
                 }

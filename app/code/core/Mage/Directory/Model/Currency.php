@@ -140,6 +140,7 @@ class Mage_Directory_Model_Currency extends Mage_Core_Model_Abstract
             throw Mage::exception('Mage_Directory', Mage::helper('directory')->__('Invalid target currency.'));
         }
         $rates = $this->getRates();
+
         if (!isset($rates[$code])) {
             $rates[$code] = $this->_getResource()->getRate($this->getCode(), $toCurrency);
             $this->setRates($rates);

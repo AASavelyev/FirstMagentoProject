@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_Shipping>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_Shipping>
+    </modules>
+</config>

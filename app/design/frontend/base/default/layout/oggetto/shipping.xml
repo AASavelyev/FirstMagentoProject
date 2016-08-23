@@ -1,0 +1,7 @@
+<layout version="0.1.0">
+    <shipping_index_index>
+        <reference name="content">
+            <block type="oggetto_shipping/show" name="shipping.show" template="oggetto/shipping/form.phtml"/>
+        </reference>
+    </shipping_index_index>
+</layout>

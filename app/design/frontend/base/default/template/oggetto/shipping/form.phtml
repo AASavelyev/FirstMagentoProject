@@ -1,0 +1,13 @@
+<?php
+$countryName = Mage::getModel('directory/country')->load('RU')->getName(); //get country name
+
+
+echo 'Country Name ->' . $countryName . '<br/>';
+
+$states = Mage::getModel('directory/country')->load('RU')->getRegions();
+
+foreach ($states as $state) {
+
+    echo 'ID->' . $state->getId() . '<br/>';
+    echo 'Name->' . $state->getName() . '<br/>';
+}
