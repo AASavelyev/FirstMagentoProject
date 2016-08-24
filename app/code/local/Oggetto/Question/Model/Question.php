@@ -56,7 +56,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
             ->setDate(date('Y-m-d H:i:s'))
             ->save();
 
-        $this->sendEmailAboutQuestion($postData, Mage::getStoreConfig('trans_email/ident_support/email'),
+        $this->_sendEmailAboutQuestion($postData, Mage::getStoreConfig('trans_email/ident_support/email'),
             Mage::getStoreConfig('trans_email/ident_support/name'));
     }
 
@@ -68,12 +68,12 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
      * @param string $name
      * @return void
      */
-    private function sendEmailAboutQuestion($emailTemplateVariables, $email, $name)
+    private function _sendEmailAboutQuestion($emailTemplateVariables, $email, $name)
     {
         $emailTemplate = Mage::getModel('core/email_template')->loadDefault('custom_email_admin_template');
 
         $emailTemplate->getProcessedTemplate();
-        $this->sendEmail($emailTemplate, $emailTemplateVariables, [
+        $this->_sendEmail($emailTemplate, $emailTemplateVariables, [
             'subject' => 'Notice about question',
             'email' => $email,
             'name' => $name
@@ -88,7 +88,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
      */
     public function sendNoticedEmail($question)
     {
-        if ($this->isNoticed($question)) {
+        if ($this->_isNoticed($question)) {
             $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_template');
 
             $emailTemplateVariables = array();
@@ -96,12 +96,12 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
             $emailTemplateVariables['answer'] = $question->getAnswer();
             $emailTemplateVariables['url'] = Mage::getUrl('question/index/show', ['id' => $question->getQuestionId()]);
 
-            $this->sendEmail($emailTemplate, $emailTemplateVariables, [
+            $this->_sendEmail($emailTemplate, $emailTemplateVariables, [
                 'subject' => 'Notice about answer',
                 'email' => $question->getEmail(),
                 'name' => $question->getName()
             ]);
-            $question->setNoticeWhenAnswer(IGNORE_ANSWER)->save();
+            $question->setNoticeWhenAnswer(self::IGNORE_ANSWER)->save();
         }
     }
 
@@ -113,7 +113,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
      * @param array         $emailToInfo
      * @return void
      */
-    private function sendEmail($emailTemplate, $emailTemplateVariables, $emailToInfo)
+    private function _sendEmail($emailTemplate, $emailTemplateVariables, $emailToInfo)
     {
         $emailTemplate->getProcessedTemplate($emailTemplateVariables);
         $emailTemplate
@@ -129,8 +129,8 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
      * @param Question $question
      * @return bool
      */
-    private function isNoticed($question)
+    private function _isNoticed($question)
     {
-        return $question->getNoticeWhenAnswer() == NOTICE_WHEN_ANSWER;
+        return $question->getNoticeWhenAnswer() == self::NOTICE_WHEN_ANSWER;
     }
 }
