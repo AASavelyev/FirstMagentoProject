@@ -47,7 +47,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
     /**
      * save question which post user
      *
-     * @param array $postData
+     * @param array $postData array of new question
      * @return void
      */
     public function saveQuestion($postData)
@@ -63,9 +63,9 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
     /**
      * send email when user asks
      *
-     * @param array  $emailTemplateVariables
-     * @param string $email
-     * @param string $name
+     * @param array  $emailTemplateVariables variables for email template
+     * @param string $email                  email address
+     * @param string $name                   name to
      * @return void
      */
     private function _sendEmailAboutQuestion($emailTemplateVariables, $email, $name)
@@ -73,7 +73,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
         $emailTemplate = Mage::getModel('core/email_template')->loadDefault('custom_email_admin_template');
 
         $emailTemplate->getProcessedTemplate();
-        $this->_sendEmail($emailTemplate, $emailTemplateVariables, [
+        Mage::helper('oggetto_question')->sendEmail($emailTemplate, $emailTemplateVariables, [
             'subject' => 'Notice about question',
             'email' => $email,
             'name' => $name
@@ -83,54 +83,22 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
     /**
      * send email when noticeWhenAnswer is 0
      *
-     * @param Question $question
-     * @return void
+     * @return Oggetto_Question_Model_Question
      */
-    public function sendNoticedEmail($question)
+    public function sendNoticedEmail()
     {
-        if ($this->_isNoticed($question)) {
-            $emailTemplate = Mage::getModel('oggetto_question/email_template')->loadDefault('custom_email_template');
+        $emailTemplate = Mage::getModel('core/email_template')->loadDefault('custom_email_template');
+        $helper = Mage::helper('oggetto_question');
+        $helper->sendEmail($emailTemplate, [
+            'question' => $this->getQuestion(),
+            'answer' => $this->getAnswer(),
+            'url' => $helper->getShowQuestionUrl($this->getQuestionId()),
+        ], [
+            'subject' => 'Notice about answer',
+            'email' => $this->getEmail(),
+            'name' => $this->getName()
+        ]);
 
-            $emailTemplateVariables = array();
-            $emailTemplateVariables['question'] = $question->getQuestion();
-            $emailTemplateVariables['answer'] = $question->getAnswer();
-            $emailTemplateVariables['url'] = Mage::getUrl('question/index/show', ['id' => $question->getQuestionId()]);
-
-            $this->_sendEmail($emailTemplate, $emailTemplateVariables, [
-                'subject' => 'Notice about answer',
-                'email' => $question->getEmail(),
-                'name' => $question->getName()
-            ]);
-            $question->setNoticeWhenAnswer(self::IGNORE_ANSWER)->save();
-        }
-    }
-
-    /**
-     * send email with using template
-     *
-     * @param EmailTemplate $emailTemplate
-     * @param array         $emailTemplateVariables
-     * @param array         $emailToInfo
-     * @return void
-     */
-    private function _sendEmail($emailTemplate, $emailTemplateVariables, $emailToInfo)
-    {
-        $emailTemplate->getProcessedTemplate($emailTemplateVariables);
-        $emailTemplate
-            ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
-            ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
-            ->setTemplateSubject($emailToInfo['subject']);
-        $emailTemplate->send($emailToInfo['email'], $emailToInfo['name'], $emailTemplateVariables);
-    }
-
-    /**
-     * check if question is noticed when admin answers
-     *
-     * @param Question $question
-     * @return bool
-     */
-    private function _isNoticed($question)
-    {
-        return $question->getNoticeWhenAnswer() == self::NOTICE_WHEN_ANSWER;
+        return $this;
     }
 }

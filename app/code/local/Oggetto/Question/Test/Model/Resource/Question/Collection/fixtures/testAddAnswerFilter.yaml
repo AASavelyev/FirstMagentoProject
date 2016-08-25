@@ -1,0 +1,8 @@
+tables:
+  oggetto_question/questions:
+    - question_id: 1
+      answer: null
+    - question_id: 2
+      answer: answer
+    - question_id: 3
+      answer: answer

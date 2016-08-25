@@ -30,43 +30,37 @@
  * @subpackage block
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-class Oggetto_Question_Block_List extends Mage_Core_Block_Template
+class Oggetto_Question_Test_Block_List extends EcomDev_PHPUnit_Test_Case
 {
     /**
-     * init question block with question with answer
+     * test __construct
      *
+     * @return void
      */
-    public function __construct()
+    public function testReturnsCollection()
     {
-        parent::__construct();
-        $collection = Mage::getResourceModel('oggetto_question/question_collection')->addAnswerFilter();
-        $this->setCollection($collection);
+        $collection = $this->getResourceModelMock('oggetto_question/question_collection', ['addAnswerFilter']);
+        $collection->expects($this->once())->method('addAnswerFilter')
+            ->will($this->returnSelf());
+        $this->replaceByMock('resource_model', 'oggetto_question/question_collection', $collection);
+
+        $block = new Oggetto_Question_Block_List;
+        $this->assertEquals($block->getCollection(), $collection);
     }
 
     /**
-     * prepare layout
+     * test getPagerHtml
      *
-     * @return Oggetto_Question_Block_List
+     * @return Oggetto_Question_Test_Block_List
      */
-    protected function _prepareLayout()
+    public function testGetPagerHtml()
     {
-        parent::_prepareLayout();
+        $result = 'Result';
+        $block = $this->getBlockMock('oggetto_question/list', ['getChildHtml']);
+        $block->expects($this->once())->method('getChildHtml')
+            ->with($this->equalTo('pager'))
+            ->will($this->returnValue($result));
 
-        $pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-        $pager->setAvailableLimit(array(5 => 5, 'all' => 'all'));
-        $pager->setCollection($this->getCollection());
-        $this->setChild('pager', $pager);
-        $this->getCollection()->load();
-        return $this;
-    }
-
-    /**
-     * get pager html
-     *
-     * @return string
-     */
-    public function getPagerHtml()
-    {
-        return $this->getChildHtml('pager');
+        $block->getPagerHtml();
     }
 }

@@ -91,8 +91,11 @@ class Oggetto_Question_Adminhtml_QuestionController extends Mage_Adminhtml_Contr
         try {
             $postData = $this->getRequest()->getPost();
             $question = Mage::getModel('oggetto_question/question');
-            $question->setData($postData)->save();
-            $question->sendNoticedEmail($question);
+            $question->setData($postData);
+            if ($question->getNoticeWhenAnswer() == Oggetto_Question_Model_Question::NOTICE_WHEN_ANSWER) {
+                $question->sendNoticedEmail()->setNoticeWhenAnswer(Oggetto_Question_Model_Question::IGNORE_ANSWER);
+            }
+            $question->save();
         } catch (Exception $e) {
             Mage::logException($e);
         }

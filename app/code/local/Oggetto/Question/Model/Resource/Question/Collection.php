@@ -43,29 +43,13 @@ class Oggetto_Question_Model_Resource_Question_Collection extends Mage_Core_Mode
     }
 
     /**
-     * get questions for page number and size
-     *
-     * @param int $page
-     * @param int $size
-     *
-     * @return Oggetto_Question_Model_Resource_Question_Collection
-     */
-    public function getForPageBySize($page, $size)
-    {
-        $this->setPageSize($size);
-        $this->setCurPage($page);
-        return $this;
-    }
-
-    /**
      * filter collection by have answer
      *
-     * @param bool $answered
      * @return Oggetto_Question_Model_Resource_Question_Collection
      */
-    public function addAnswerFilter($answered)
+    public function addAnswerFilter()
     {
-        $this->addFieldToFilter('answer', array("notnull" => $answered));
+        $this->addFieldToFilter('answer', array("notnull" => true));
         return $this;
     }
 
@@ -94,7 +78,7 @@ class Oggetto_Question_Model_Resource_Question_Collection extends Mage_Core_Mode
     /**
      * add isAnswered field to collection of questions
      *
-     * @param string $value
+     * @param string $value value of answer
      * @return Oggetto_Question_Model_Resource_Question_Collection
      */
     public function addIsAnsweredFilter($value)

@@ -25,7 +25,7 @@
 try {
     $installer = $this;
     $installer->startSetup();
-    $installer->getConnection()->newTable($installer->getTable('question/questions'))
+    $table = $installer->getConnection()->newTable($installer->getTable('oggetto_question/questions'))
         ->addColumn('question_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
             'unsigned' => true,
             'nullable' => false,
@@ -47,7 +47,7 @@ try {
             'nullable' => false,
         ), 'User name')
         ->setComment('New question table');
-    $installer->getConnection()->createTable('questions');
+    $installer->getConnection()->createTable($table);
 
     $installer->endSetup();
 } catch (Exception $e) {

@@ -98,4 +98,11 @@
             </adminhtml>
         </routers>
     </admin>
+    <phpunit>
+        <suite>
+            <modules>
+                <Oggetto_Question />
+            </modules>
+        </suite>
+    </phpunit>
 </config>

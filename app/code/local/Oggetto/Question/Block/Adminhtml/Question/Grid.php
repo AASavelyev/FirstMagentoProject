@@ -171,7 +171,7 @@ class Oggetto_Question_Block_Adminhtml_Question_Grid extends Mage_Adminhtml_Bloc
     /**
      * get url for rows in grid
      *
-     * @param Question $question
+     * @param Question $question question
      *
      * @return  string
      */
@@ -195,8 +195,8 @@ class Oggetto_Question_Block_Adminhtml_Question_Grid extends Mage_Adminhtml_Bloc
     /**
      * add filter, which check if question has answer
      *
-     * @param Oggetto_Question_Block_Adminhtml_Question_Grid $collection
-     * @param Column                                         $column
+     * @param Oggetto_Question_Block_Adminhtml_Question_Grid $collection collection
+     * @param Column                                         $column     current column
      *
      * @return Oggetto_Question_Block_Adminhtml_Question_Grid
      */

@@ -41,4 +41,33 @@ class Oggetto_Question_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getStoreConfigFlag('oggetto/question/enabled');
     }
+
+    /**
+     * get url for show question by id
+     *
+     * @param int $id question id
+     * @return string
+     */
+    public function getShowQuestionUrl($id)
+    {
+        return Mage::getUrl('question/index/show', ['id' => $id]);
+    }
+
+    /**
+     * send email with using template
+     *
+     * @param EmailTemplate $emailTemplate          email template
+     * @param array         $emailTemplateVariables varialbes for email
+     * @param array         $emailToInfo            array with info about sender
+     * @return void
+     */
+    public function sendEmail($emailTemplate, $emailTemplateVariables, $emailToInfo)
+    {
+        $emailTemplate->getProcessedTemplate($emailTemplateVariables);
+        $emailTemplate
+            ->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email'))
+            ->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setTemplateSubject($emailToInfo['subject']);
+        $emailTemplate->send($emailToInfo['email'], $emailToInfo['name'], $emailTemplateVariables);
+    }
 }

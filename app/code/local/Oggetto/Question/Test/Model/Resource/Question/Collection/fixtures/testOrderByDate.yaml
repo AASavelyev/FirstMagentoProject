@@ -1,0 +1,11 @@
+tables:
+  oggetto_question/questions:
+    - question_id: 1
+      answer: null
+      date: 2016-08-25 09:00:00
+    - question_id: 2
+      answer: answer
+      date: 2016-08-24 09:00:00
+    - question_id: 3
+      answer: answer
+      date: 2016-08-26 09:00:00
