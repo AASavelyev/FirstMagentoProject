@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Oggetto_Payment>
+            <version>0.1.0</version>
+        </Oggetto_Payment>
+    </modules>
+    <global>
+        <models>
+            <oggetto_payment>
+                <class>Oggetto_Payment_Model</class>
+            </oggetto_payment>
+        </models>
+        <helpers>
+            <oggetto_payment>
+                <class>Oggetto_Payment_Helper</class>
+            </oggetto_payment>
+        </helpers>
+    </global>
+
+    <default>
+        <payment>
+            <oggetto_payment>
+                <model>oggetto_payment/standard</model>
+                <active>1</active>
+                <order_status>pending</order_status>
+                <title>CUSTOM CARD</title>
+                <payment_action>sale</payment_action>
+                <submit_url>https://someurl.com</submit_url>
+                <merchant_id>Insert merchant id</merchant_id>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+            </oggetto_payment>
+        </payment>
+    </default>
+
+    <frontend>
+        <routers>
+            <payment>
+                <use>standard</use>
+                <args>
+                    <module>Oggetto_Payment</module>
+                    <frontName>payment</frontName>
+                </args>
+            </payment>
+        </routers>
+        <layout>
+            <updates>
+                <oggetto_payment>
+                    <file>oggetto/payment.xml</file>
+                </oggetto_payment>
+            </updates>
+        </layout>
+    </frontend>
+    <phpunit>
+        <suite>
+            <modules>
+                <Oggetto_Payment />
+            </modules>
+        </suite>
+    </phpunit>
+</config>

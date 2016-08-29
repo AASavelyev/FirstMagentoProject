@@ -61,7 +61,7 @@ class Oggetto_Shipping_Model_Api_Client
     /**
      * Make request to API
      *
-     * @param array $data
+     * @param array $data data
      * @return SimpleXMLElement
      */
     protected function _makeRequest(array $data)
@@ -82,7 +82,7 @@ class Oggetto_Shipping_Model_Api_Client
     /**
      * get shipping info from oggetto
      *
-     * @param array $request
+     * @param array $request request
      * @return array
      */
     public function getShippingInfo($request)

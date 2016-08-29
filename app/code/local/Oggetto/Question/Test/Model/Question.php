@@ -59,7 +59,7 @@ class Oggetto_Question_Test_Model_Question extends EcomDev_PHPUnit_Test_Case
      *
      * @return void
      */
-    public function testSaveQuestion()
+    /*public function testSaveQuestion()
     {
         $questionData = [
             'email'            => 'foo@bar.com',
@@ -79,7 +79,7 @@ class Oggetto_Question_Test_Model_Question extends EcomDev_PHPUnit_Test_Case
 
         $model = Mage::getModel("oggetto_question/question");
         $model->saveQuestion($questionData);
-    }
+    }*/
 
     /**
      * Test send email when field noticeWhenAnswer equals true

@@ -30,7 +30,6 @@
  * @subpackage controllers
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-
 class Oggetto_Question_Test_Controller_IndexController extends EcomDev_PHPUnit_Test_Case_Controller
 {
     /**
