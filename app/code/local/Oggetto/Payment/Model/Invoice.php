@@ -59,8 +59,7 @@ class Oggetto_Payment_Model_Invoice extends Mage_Core_Model_Abstract
             $invoice->setState(Mage_Sales_Model_Order_Invoice::STATE_OPEN);
             $transactionSave = Mage::getModel('core/resource_transaction')
                 ->addObject($invoice)
-                ->addObject($invoice->getOrder())
-            ;
+                ->addObject($invoice->getOrder());
             $transactionSave->save();
         } catch (Mage_Core_Exception $e) {
             $order->addStatusHistoryComment($e->getMessage(), false);

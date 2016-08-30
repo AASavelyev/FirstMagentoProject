@@ -53,7 +53,7 @@ class Oggetto_Payment_StandardController extends Mage_Core_Controller_Front_Acti
     {
         $postData = $this->getRequest()->getPost();
 
-        $status = Mage::helper('oggetto_payment')->checkValidRequest($postData) ?
+        $status = Mage::getModel('oggetto_payment/paymentApi_payment')->checkValidRequest($postData) ?
             Mage_Sales_Model_Order_Invoice::STATE_PAID :
             Mage_Sales_Model_Order_Invoice::STATE_CANCELED;
         Mage::getModel('oggetto_payment/invoice')->setInvoiceStatus($postData['order_id'], $status);

@@ -32,86 +32,24 @@
  */
 class Oggetto_Payment_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const SUCCESS_STATUS = 1;
-    const ERROR_STATUS = 2;
-    const PAYMENT_REPORT_URL = 'http://office.oggettoweb.com:12345/payment/standard/checkPayment';
-    /**
-     * get hash from request
-     *
-     * @param array $request request
-     * @return string
-     */
-    public function getHashFromArray($request)
-    {
-        $key = $this->getSecretPaymentKey();
-        ksort($request);
-        $signatureArray = array();
-
-        foreach ($request as $x => $value) {
-            // check that key doesn't equal hash
-            if ($x != 'hash') {
-                $signatureArray[] = $x . ':' . $value;
-            }
-        }
-        return md5(join('|', $signatureArray) . '|' . $key);
-    }
-
     /**
      * Get secret key
      *
      * @return string
      */
-    private function getSecretPaymentKey()
+    public function getSecretPaymentKey()
     {
         return Mage::helper('core')->decrypt(Mage::getStoreConfig('oggetto/payment/secret_key'));
     }
 
     /**
-     * get payment info
+     * Get url for payment api
      *
-     * @return array
+     * @param string $method success/error
+     * @return string
      */
-    public function getPaymentInfo()
+    public function getPaymentUrl($method)
     {
-        $orderIncrementId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
-        $order = Mage::getModel('sales/order');
-        $order->loadByIncrementId($orderIncrementId);
-        Mage::getModel('oggetto_payment/invoice')->createPendingInvoice($order);
-        $cartItems = $order->getAllVisibleItems();
-        $items = array();
-        foreach ($cartItems as $item) {
-            $items[] = $item->getName();
-        }
-        $paymentInfo = [
-            'total'              => str_replace('.', ',', $order->getBaseGrandTotal()),
-            'order_id'           => $order->getEntityId(),
-            'items'              => join(',', $items),
-            'success_url'        => Mage::getUrl('payment/standard/success'),
-            'error_url'          => Mage::getUrl('payment/standard/error'),
-            'payment_report_url' => self::PAYMENT_REPORT_URL
-        ];
-        $paymentInfo['hash'] = $this->getHashFromArray($paymentInfo);
-        return $paymentInfo;
-    }
-
-    /**
-     * check is valid request
-     *
-     * @param array $postData request which was sent by oggetto payment system
-     * @return bool
-     */
-    public function checkValidRequest($postData)
-    {
-        if (http_response_code() == 200) {
-            $order = Mage::getModel('sales/order')->load($postData['order_id']);
-
-            if ($order != null) {
-                return str_replace('.', ',', $order->getBaseGrandTotal()) == $postData['total']
-                && $postData['status'] == self::SUCCESS_STATUS
-                && $this->getHashFromArray($postData) == $postData['hash'];
-            }
-        }
-
-        return false;
+        return Mage::getUrl('payment/standard/' . $method);
     }
 }
