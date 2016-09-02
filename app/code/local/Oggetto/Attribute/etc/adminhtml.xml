@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <catalog translate="title" module="catalog">
+            <children>
+                <attributes translate="title" module="catalog">
+                    <children>
+                        <itemAttributes translate="title" module="catalog">
+                            <title>Manage Category Attribute</title>
+                            <action>adminhtml/categoryAttribute</action>
+                        </itemAttributes>
+                    </children>
+                </attributes>
+            </children>
+        </catalog>
+        <customer translate="title" module="customer">
+            <children>
+                <attributes translate="title" module="customer">
+                    <title>Attributes</title>
+                    <children>
+                        <addressAttributes translate="title" module="customer">
+                            <title>Manage Address Attributes</title>
+                            <action>adminhtml/catalog_product_attribute/</action>
+                        </addressAttributes>
+                        <clientAttributes translate="title" module="customer">
+                            <title>Manage Client Attributes</title>
+                            <action>adminhtml/customerAttribute</action>
+                        </clientAttributes>
+                    </children>
+                    <sort_order>1000</sort_order>
+                </attributes>
+            </children>
+        </customer>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <customer>
+                        <children>
+                            <attributes>
+                                <children>
+                                    <addressAttributes translate="title">
+                                        <title>Manage Address Attributes</title>
+                                        <sort_order>20</sort_order>
+                                    </addressAttributes>
+                                    <clientAttributes translate="title">
+                                        <title>Manage Client Attributes</title>
+                                        <sort_order>10</sort_order>
+                                    </clientAttributes>
+                                </children>
+                            </attributes>
+                        </children>
+                    </customer>
+                    <catalog>
+                        <children>
+                            <attributes>
+                                <children>
+                                    <itemAttributes translate="title">
+                                        <title>Manage Category Attribute</title>
+                                        <sort_order>30</sort_order>
+                                    </itemAttributes>
+                                </children>
+                            </attributes>
+                        </children>
+                    </catalog>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <oggetto>
+                                        <title>Oggetto - All</title>
+                                    </oggetto>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

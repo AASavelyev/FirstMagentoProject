@@ -37,7 +37,7 @@ class Oggetto_Question_Model_Question extends Mage_Core_Model_Abstract
     /**
      * init model question
      *
-     * @return Oggetto_Question_Model_Question
+     * @return void
      */
     protected function _construct()
     {
