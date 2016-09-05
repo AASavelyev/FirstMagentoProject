@@ -34,5 +34,4 @@ require_once 'Base/BaseCollection.php';
 class Oggetto_Attribute_Model_Resource_CustomerCollection extends Oggetto_Attribute_Model_Resource_Base_BaseCollection
 {
     protected $_tableName = 'customer';
-
 }

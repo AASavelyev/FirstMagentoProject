@@ -40,13 +40,14 @@ class Oggetto_Attribute_Block_Adminhtml_CustomerEdit_Form extends Mage_Eav_Block
     protected function _prepareForm()
     {
         parent::_prepareForm();
-        $attributeObject = $this->getAttributeObject();
         $form = $this->getForm();
         $form->setUseContainer(true);
         $fieldset = $form->getElement('base_fieldset');
         $yesnoSource = Mage::getModel('adminhtml/system_config_source_yesno')->toOptionArray();
 
         $frontendInputElm = $form->getElement('frontend_input');
+
+        $codes = Mage::getModel('oggetto_attribute/customerFormCode')->getFormCodes();
 
         $response = new Varien_Object();
         $response->setTypes(array());
@@ -76,8 +77,8 @@ class Oggetto_Attribute_Block_Adminhtml_CustomerEdit_Form extends Mage_Eav_Block
 
         $fieldset->addField('max_text_length', 'text', array(
             'name' => 'max_text_length',
-            'label' => $this->__('Min text length'),
-            'title' => $this->__('Min text length'),
+            'label' => $this->__('Max text length'),
+            'title' => $this->__('Max text length'),
             'class' => 'validate-digits',
         ));
 
@@ -102,6 +103,13 @@ class Oggetto_Attribute_Block_Adminhtml_CustomerEdit_Form extends Mage_Eav_Block
             'label' => $this->__('Sort Order'),
             'title' => $this->__('Sort Order'),
             'class' => 'validate-digits',
+        ));
+
+        $fieldset->addField('used_in_forms', 'multiselect', array(
+           'name' => 'usedInForms[]',
+            'label' => $this->__('Used in forms'),
+            'title' => $this->__('Used in forms'),
+            'values' => $codes,
         ));
 
         $this->setForm($form);

@@ -48,8 +48,6 @@ class Oggetto_Attribute_Block_Adminhtml_CategoryAttribute_Grid
         return parent::_prepareCollection();
     }
 
-
-
     /**
      * Prepare product attributes grid columns
      *

@@ -23,20 +23,46 @@
  */
 
 /**
- * customer edit block
+ * Model for getting customers' form code attributes
  *
  * @category   Oggetto
  * @package    Oggetto_Attribute
+ * @subpackage Model
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-class Oggetto_Attribute_Block_Adminhtml_CustomerEdit extends Oggetto_Attribute_Block_Adminhtml_Base_Edit
+class Oggetto_Attribute_Model_CustomerFormCode extends Mage_Core_Model_Abstract
 {
     /**
-     * init Edit Customer Block
+     * init customer from code model
+     *
+     * @return void
      */
-    public function __construct()
+    protected function _construct()
     {
-        $this->_mode = 'customerEdit';
-        parent::__construct();
+        $this->_init('oggetto_attribute/customerFormCode');
+    }
+
+    /**
+     * Get all form codes
+     *
+     * @return array
+     */
+    public function getFormCodes()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $adapter  = $resource->getConnection('core_read');
+        $select   = $adapter->select()
+            ->from($resource->getTableName('customer/form_attribute'), 'form_code')
+            ->group('form_code');
+
+        $codes = $adapter->fetchCol($select);
+        $result = [];
+        foreach ($codes as $code) {
+            $result[] = array(
+                'value' => $code,
+                'label' => $code
+            );
+        }
+        return $result;
     }
 }

@@ -23,18 +23,25 @@
  */
 
 /**
- * address controller for work with attributes
+ * Address attribute grid container
  *
  * @category   Oggetto
  * @package    Oggetto_Attribute
- * @subpackage controllers
+ * @subpackage Block
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-require_once 'CustomerAttributeController.php';
-class Oggetto_Attribute_Adminhtml_AddressAttributeController
-    extends Oggetto_Attribute_Adminhtml_CustomerAttributeController
+class Oggetto_Attribute_Block_Adminhtml_AddressGridContainer
+    extends Oggetto_Attribute_Block_Adminhtml_Base_BaseAttributeGridContainer
 {
-    protected $_entityTypeId;
-    protected $_entityType = 'customer_address';
-    protected $_entityName = 'Address';
+    /**
+     * prepare attribute grid
+     *
+     */
+    public function __construct()
+    {
+        $this->_addButtonLabel = $this->__('Add New Address Attribute');
+        $this->_headerText = $this->__('Address Attribute');
+        $this->_controller = 'adminhtml_addressAttribute';
+        parent::__construct();
+    }
 }

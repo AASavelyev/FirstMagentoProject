@@ -23,18 +23,26 @@
  */
 
 /**
- * address controller for work with attributes
+ * Address attribute grid block
  *
  * @category   Oggetto
  * @package    Oggetto_Attribute
- * @subpackage controllers
+ * @subpackage Block
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-require_once 'CustomerAttributeController.php';
-class Oggetto_Attribute_Adminhtml_AddressAttributeController
-    extends Oggetto_Attribute_Adminhtml_CustomerAttributeController
+class Oggetto_Attribute_Block_Adminhtml_AddressAttribute_Grid
+    extends Oggetto_Attribute_Block_Adminhtml_Base_BaseAttribute_Grid
 {
-    protected $_entityTypeId;
-    protected $_entityType = 'customer_address';
-    protected $_entityName = 'Address';
+    /**
+     * Prepare category attributes grid collection object
+     *
+     * @return Oggetto_Attribute_Block_Grid
+     */
+    protected function _prepareCollection()
+    {
+        $collection = Mage::getResourceModel('oggetto_attribute/customerCollection')
+            ->addEntityTypeFilter('customer_address');
+        $this->setCollection($collection);
+        return parent::_prepareCollection();
+    }
 }

@@ -20,7 +20,7 @@
                     <children>
                         <addressAttributes translate="title" module="customer">
                             <title>Manage Address Attributes</title>
-                            <action>adminhtml/catalog_product_attribute/</action>
+                            <action>adminhtml/addressAttribute</action>
                         </addressAttributes>
                         <clientAttributes translate="title" module="customer">
                             <title>Manage Client Attributes</title>
