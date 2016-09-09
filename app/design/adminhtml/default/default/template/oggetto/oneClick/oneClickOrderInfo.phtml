@@ -1,0 +1,30 @@
+<?php $logs = $this->getLogs(); ?>
+<div>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head fieldset-legend head-account">Order Information</h4>
+        </div>
+        <div class="grid">
+            <table class="table">
+                <thead>
+                <tr class="headings">
+                    <th>Username</th>
+                    <th>Date</th>
+                    <th>State</th>
+                    <th>Comment</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($logs as $log): ?>
+                        <tr>
+                            <td><?php echo $log->getUsername(); ?></td>
+                            <td><?php echo $log->getDate(); ?></td>
+                            <td><?php echo $log->getData('stateName'); ?></td>
+                            <td><?php echo $log->getComment(); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

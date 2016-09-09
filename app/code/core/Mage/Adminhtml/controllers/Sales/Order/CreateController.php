@@ -355,7 +355,6 @@ class Mage_Adminhtml_Sales_Order_CreateController extends Mage_Adminhtml_Control
             $order->setReordered(true);
             $this->_getSession()->setUseOldShippingMethod(true);
             $this->_getOrderCreateModel()->initFromOrder($order);
-
             $this->_redirect('*/*');
         }
         else {
@@ -511,6 +510,7 @@ class Mage_Adminhtml_Sales_Order_CreateController extends Mage_Adminhtml_Control
             if( !empty($message) ) {
                 $this->_getSession()->addError($message);
             }
+            Mage::log($e->getMessage());
             $this->_redirect('*/*/');
         } catch (Mage_Core_Exception $e){
             $message = $e->getMessage();
@@ -518,10 +518,12 @@ class Mage_Adminhtml_Sales_Order_CreateController extends Mage_Adminhtml_Control
                 $this->_getSession()->addError($message);
             }
             $this->_redirect('*/*/');
+            Mage::log($e->getMessage());
         }
         catch (Exception $e){
             $this->_getSession()->addException($e, $this->__('Order saving error: %s', $e->getMessage()));
             $this->_redirect('*/*/');
+            Mage::log($e->getMessage());
         }
     }
 

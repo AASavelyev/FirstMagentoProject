@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_categoryattribute_index>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_categoryGridContainer" name="categoryAttribute.admin_grid" />
+        </reference>
+    </adminhtml_categoryattribute_index>
+
+    <adminhtml_categoryattribute_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_edit" name="categoryattribute.edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="oggetto_attribute/adminhtml_edit_tabs" name="categoryattribute.tabs"></block>
+        </reference>
+        <reference name="js">
+            <block type="oggetto_attribute/adminhtml_edit_js" template="oggetto/categotyAttribute/edit/js.phtml" name="categoryattribute.js"></block>
+            <!--<block type="core/template" template="catalog/wysiwyg/js.phtml"/>-->
+        </reference>
+    </adminhtml_categoryattribute_edit>
+
+    <adminhtml_customerattribute_index>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_customerGridContainer" name="customerAttribute.admin_grid" />
+        </reference>
+    </adminhtml_customerattribute_index>
+
+    <adminhtml_customerattribute_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_customerEdit" name="customerattribute.edit"></block>
+        </reference>
+        <reference name="js">
+            <block type="oggetto_attribute/adminhtml_edit_js" template="oggetto/categotyAttribute/edit/customerAttributeJs.phtml" name="categoryattribute.js"></block>
+        </reference>
+    </adminhtml_customerattribute_edit>
+
+    <adminhtml_addressattribute_index>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_addressGridContainer" name="addressAttribute.admin_grid" />
+        </reference>
+    </adminhtml_addressattribute_index>
+
+    <adminhtml_addressattribute_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="oggetto_attribute/adminhtml_customerEdit" name="customerattribute.edit"></block>
+        </reference>
+        <reference name="js">
+            <block type="oggetto_attribute/adminhtml_edit_js" template="oggetto/categotyAttribute/edit/customerAttributeJs.phtml" name="categoryattribute.js"></block>
+        </reference>
+    </adminhtml_addressattribute_edit>
+</layout>

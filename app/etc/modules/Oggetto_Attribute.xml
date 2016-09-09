@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_Attribute>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_Attribute>
+    </modules>
+</config>

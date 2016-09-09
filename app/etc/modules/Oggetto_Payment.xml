@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_Payment>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_Payment>
+    </modules>
+</config>

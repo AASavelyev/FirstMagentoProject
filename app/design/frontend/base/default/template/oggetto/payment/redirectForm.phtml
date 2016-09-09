@@ -1,0 +1,19 @@
+<?php
+    $info = Mage::getModel('oggetto_payment/paymentApi_payment')->getPaymentInfo();
+?>
+<div>
+    <form method="post" action="http://edu.oggettoweb.ru/homework/payment/form.php" name="oggettoSubmitForm">
+        <input type="hidden" name="order_id" value="<?php echo $info['order_id'] ?>">
+        <input type="hidden" name="total" value="<?php echo $info['total'] ?>">
+        <input type="hidden" name="items" value="<?php echo $info['items'] ?>">
+        <input type="hidden" name="success_url" value="<?php echo $info['success_url'] ?>">
+        <input type="hidden" name="error_url" value="<?php echo $info['error_url'] ?>">
+        <input type="hidden" name="payment_report_url" value="<?php echo $info['payment_report_url'] ?>">
+        <input type="hidden" name="hash" value="<?php echo $info['hash'] ?>">
+    </form>
+</div>
+<script>
+    window.onload = function() {
+        document.forms["oggettoSubmitForm"].submit();
+    };
+</script>

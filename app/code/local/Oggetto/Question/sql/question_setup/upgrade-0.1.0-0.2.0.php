@@ -22,14 +22,6 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-/**
- * Question collection model
- *
- * @category   Oggetto
- * @package    Oggetto_Question
- * @subpackage Model
- * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
- */
 try {
     $installer = $this;
     $installer->startSetup();

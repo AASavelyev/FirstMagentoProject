@@ -1,0 +1,19 @@
+<layout version="0.2.0">
+    <catalog_product_view translate="label">
+        <reference name="product.info.addtocart">
+            <block type="oggetto_oneClick/buyByClick" name="oggetto.oneClick" as="oneClick" template="oggetto/oneClick/buyByClick.phtml" />
+        </reference>
+        <reference name="product.info">
+            <block type="oggetto_oneClick/buyByClick" name="oggetto.modalWindow" as="modalWindow" template="oggetto/oneClick/modalWindow.phtml" />
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/bootstrap.js</name></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/oggetto/fastOrder.js</name></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/bootstrap.css</name></action>
+        </reference>
+    </catalog_product_view>
+</layout>

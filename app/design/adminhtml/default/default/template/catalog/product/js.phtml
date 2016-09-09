@@ -88,6 +88,7 @@ varienGlobalEvents.attachEventHandler('showTab', bindActiveProductTab);
 <?php if($tabsBlock = $this->getLayout()->getBlock('product_tabs')): ?>
 if(<?php echo $tabsBlock->getJsObjectName() ?> && <?php echo $tabsBlock->getJsObjectName() ?>.activeTab && $('store_switcher')){
     $('store_switcher').switchParams = 'active_tab/'+<?php echo $tabsBlock->getJsObjectName() ?>.activeTab.name+'/';
+    console.log("sdfsdfsf");
 }
 <?php endif; ?>
 //]]>

@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_OneClick>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_OneClick>
+    </modules>
+</config>

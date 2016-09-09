@@ -252,7 +252,7 @@ abstract class Mage_Eav_Model_Form
         if (is_null($this->_attributes)) {
             /* @var $collection Mage_Eav_Model_Resource_Form_Attribute_Collection */
             $collection = $this->_getFormAttributeCollection();
-
+            //var_dump($this->getFormCode());die;
             $collection->setStore($this->getStore())
                 ->setEntityType($this->getEntityType())
                 ->addFormCodeFilter($this->getFormCode())

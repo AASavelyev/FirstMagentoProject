@@ -297,6 +297,7 @@ class Mage_Eav_Model_Config
         if ($code instanceof Mage_Eav_Model_Entity_Type) {
             return $code;
         }
+
         Varien_Profiler::start('EAV: '.__METHOD__);
 
         if (is_numeric($code)) {
@@ -313,8 +314,8 @@ class Mage_Eav_Model_Config
             return $entityType;
         }
 
-
         $entityType = Mage::getModel('eav/entity_type');
+
         if (isset($this->_entityData[$code])) {
             $entityType->setData($this->_entityData[$code]);
         } else {
@@ -328,6 +329,7 @@ class Mage_Eav_Model_Config
                 Mage::throwException(Mage::helper('eav')->__('Invalid entity_type specified: %s', $code));
             }
         }
+
         $this->_addEntityTypeReference($entityType->getId(), $entityType->getEntityTypeCode());
         $this->_save($entityType, $entityKey);
 

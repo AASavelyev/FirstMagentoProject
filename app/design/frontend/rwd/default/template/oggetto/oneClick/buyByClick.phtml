@@ -1,0 +1,7 @@
+<button type="button" title="buy by click" data-product="<?php echo Mage::registry('current_product')->getId(); ?>"
+        data-islogged="<?php echo var_export($this->isLogged(), true); ?>" name="fastBuyBtn" class="button">
+    <span>
+        <span>Buy by click</span>
+    </span>
+</button>
+<div class="alert alert-success hide js-success-alert" role="alert">Success!</div>

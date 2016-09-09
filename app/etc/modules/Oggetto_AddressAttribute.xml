@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Oggetto_AddressAttribute>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oggetto_AddressAttribute>
+    </modules>
+</config>

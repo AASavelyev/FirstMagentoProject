@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_oneclick_index>
+        <reference name="content">
+            <block type="oggetto_oneClick/adminhtml_oneClickOrder" name="oneClickOrder.admin_list" />
+        </reference>
+    </adminhtml_oneclick_index>
+
+    <adminhtml_oneclick_edit>
+        <reference name="content">
+            <block type="oggetto_oneClick/adminhtml_edit" name="oneClickOrder.edit" />
+            <block type="oggetto_oneClick/adminhtml_edit_form" name="oneClickOrder.info" template="oggetto/oneClick/oneClickOrderInfo.phtml" />
+        </reference>
+    </adminhtml_oneclick_edit>
+
+    <adminhtml_oneclick_delete>
+        <reference name="content">
+            <block type="oggetto_oneClick/adminhtml_delete" name="oneClickOrder.cancel"/>
+        </reference>
+    </adminhtml_oneclick_delete>
+</layout>

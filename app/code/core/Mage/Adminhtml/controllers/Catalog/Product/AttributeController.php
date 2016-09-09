@@ -66,8 +66,9 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
     public function indexAction()
     {
         $this->_initAction()
-            ->_addContent($this->getLayout()->createBlock('adminhtml/catalog_product_attribute'))
-            ->renderLayout();
+            ->_addContent($this->getLayout()->createBlock('adminhtml/catalog_product_attribute'));
+
+        $this->renderLayout();
     }
 
     public function newAction()
@@ -82,7 +83,6 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
             ->setEntityTypeId($this->_entityTypeId);
         if ($id) {
             $model->load($id);
-
             if (! $model->getId()) {
                 Mage::getSingleton('adminhtml/session')->addError(
                     Mage::helper('catalog')->__('This attribute no longer exists'));
@@ -120,7 +120,6 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
             ->setIsPopup((bool)$this->getRequest()->getParam('popup'));
 
         $this->renderLayout();
-
     }
 
     public function validateAction()

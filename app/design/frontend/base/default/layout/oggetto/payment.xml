@@ -1,0 +1,17 @@
+<layout version="0.1.0">
+    <payment_standard_redirect>
+        <reference name="content">
+            <block type="core/template" name="payment.redirect" template="oggetto/payment/redirectForm.phtml"/>
+        </reference>
+    </payment_standard_redirect>
+    <payment_standard_error>
+        <reference name="content">
+            <block type="core/template" name="payment.error" template="oggetto/payment/error.phtml"/>
+        </reference>
+    </payment_standard_error>
+    <payment_standard_success>
+        <reference name="content">
+            <block type="core/template" name="payment.success" template="oggetto/payment/success.phtml"/>
+        </reference>
+    </payment_standard_success>
+</layout>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <sales translate="title" module="sales">
+            <children>
+                <oneClickOrder translate="title" module="sales">
+                    <title>One Click Orders</title>
+                    <action>adminhtml/oneClick</action>
+                    <sort_order>200</sort_order>
+                </oneClickOrder>
+            </children>
+        </sales>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <oneClickOrder translate="title">
+                                <title>One Click Orders</title>
+                                <sort_order>200</sort_order>
+                            </oneClickOrder>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <oggetto>
+                                        <title>Oggetto - All</title>
+                                    </oggetto>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

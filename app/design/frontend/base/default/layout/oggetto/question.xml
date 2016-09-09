@@ -1,5 +1,4 @@
 <layout version="0.2.0">
-
     <question_index_index>
         <reference name="content">
             <block type="core/template" name="question" template="oggetto/question/main.phtml">
