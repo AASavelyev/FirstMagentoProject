@@ -90,4 +90,11 @@
             </adminhtml>
         </routers>
     </admin>
+    <phpunit>
+        <suite>
+            <modules>
+                <Oggetto_OneClick />
+            </modules>
+        </suite>
+    </phpunit>
 </config>

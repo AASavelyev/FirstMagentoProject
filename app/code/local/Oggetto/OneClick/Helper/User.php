@@ -40,7 +40,6 @@ class Oggetto_OneClick_Helper_User extends Mage_Core_Helper_Abstract
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $user = Mage::getSingleton('customer/session')->getCustomer();
-
             return [
                 'username' => $user->getName(),
                 'phone' => $user->getPhone(),

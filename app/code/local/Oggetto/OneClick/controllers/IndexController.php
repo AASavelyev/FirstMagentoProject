@@ -38,7 +38,6 @@ class Oggetto_OneClick_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function saveAction()
     {
-
         $data = $this->getRequest()->getPost();
         $user = Mage::helper('oggetto_oneClick/user')->getUserInfo();
         if ($user != null) {

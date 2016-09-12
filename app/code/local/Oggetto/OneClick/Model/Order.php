@@ -72,9 +72,10 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
      */
     public function initRuleData()
     {
+        $store = $this->_session->getStore();
         Mage::register('rule_data', new Varien_Object(array(
-            'store_id'  => $this->_session->getStore()->getId(),
-            'website_id'  => $this->_session->getStore()->getWebsiteId(),
+            'store_id'  => $store->getId(),
+            'website_id'  => $store->getWebsiteId(),
             'customer_group_id' => $this->getCustomerGroupId(),
         )));
         return $this;
@@ -146,6 +147,7 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
             $quote->setCustomerIsGuest(true);
         }
         $quote->setOneClickOrderId($order->getOrderId());
+        $quote->setCustomerFirstname($order->getUsername());
         $quote->save();
         return $this;
     }
@@ -156,10 +158,11 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
      * @param int $productId product id
      * @return Mage_Sales_Model_Quote_Item | string
      */
-    public function initFromProductId($productId)
+    private function initFromProductId($productId)
     {
+        $storeId = $this->getSession()->getStoreId();
         $product = Mage::getModel('catalog/product')
-            ->setStoreId($this->getSession()->getStoreId())
+            ->setStoreId($storeId)
             ->load($productId);
         $product->setSkipCheckRequiredOption(true);
         $buyRequest = new Varien_Object(array());
@@ -172,7 +175,7 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
         Mage::dispatchEvent('sales_convert_order_item_to_quote_item', array(
             'order_item' => new Varien_Object([
                 'product_id' => $productId,
-                'store_id' => $this->getSession()->getStoreId()
+                'store_id' => $storeId
             ]),
             'quote_item' => $item
         ));
