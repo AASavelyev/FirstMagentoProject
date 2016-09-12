@@ -40,8 +40,7 @@ class Oggetto_OneClick_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_Wi
     {
         $order = Mage::registry('oneClick_orderInfo');
         $logs = Mage::getResourceModel('oggetto_oneClick/oneClickLog_collection')
-            ->getByOrderId($order->getOrderId())
-            ->addStatusName();
+            ->getByOrderId($order->getOrderId());
         return $logs;
     }
 

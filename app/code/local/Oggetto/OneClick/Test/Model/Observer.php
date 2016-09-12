@@ -55,7 +55,7 @@ class Oggetto_OneClick_Test_Model_Observer extends EcomDev_PHPUnit_Test_Case
         $logModelMock->expects($this->once())->method('log')->with(
             42,
             Oggetto_OneClick_Model_OneClickOrder::CREATE_ORDER_MESSAGE . 42,
-            Oggetto_OneClick_Model_OneClickOrder::HANDLED_STATUS);
+            Oggetto_OneClick_Model_Status::HANDLED_STATUS);
         $this->replaceByMock('model', 'oggetto_oneClick/oneClickLog', $logModelMock);
 
         $model = new Oggetto_OneClick_Model_Observer;

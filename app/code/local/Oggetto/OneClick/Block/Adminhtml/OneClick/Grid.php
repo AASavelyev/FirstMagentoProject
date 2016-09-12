@@ -52,8 +52,7 @@ class Oggetto_OneClick_Block_Adminhtml_OneClick_Grid extends Mage_Adminhtml_Bloc
      */
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('oggetto_oneClick/oneClickOrder')->getCollection()
-            ->addStatusName();
+        $collection = Mage::getModel('oggetto_oneClick/oneClickOrder')->getCollection();
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -114,12 +113,11 @@ class Oggetto_OneClick_Block_Adminhtml_OneClick_Grid extends Mage_Adminhtml_Bloc
             'escape'        => true,
         ));
 
-        $this->addColumn('stateName', array(
+        $this->addColumn('state', array(
             'header'        => $this->__('State'),
-            'filter_condition_callback'  => [$this, '_addStateNameFilter'],
-            'index'         => 'stateName',
+            'index'         => 'state',
             'type'          => 'options',
-            'options'       => [1 => 'New', 2 => 'Rejected', 3 => 'Handled']
+            'options'       => Mage::getModel('oggetto_oneClick/status')->toOptionArray()
         ));
 
         return parent::_prepareColumns();

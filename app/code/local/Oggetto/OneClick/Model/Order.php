@@ -29,7 +29,7 @@
  * @package    Oggetto_OneClick
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
+class Oggetto_OneClick_Model_Order extends Mage_Adminhtml_Model_Sales_Order_Create
 {
     protected $_session;
     protected $_quote;
@@ -40,59 +40,6 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
     public function __construct()
     {
         $this->_session = Mage::getSingleton('adminhtml/session_quote');
-    }
-
-    /**
-     * Retrieve session model object of quote
-     *
-     * @return Mage_Adminhtml_Model_Session_Quote
-     */
-    public function getSession()
-    {
-        return $this->_session;
-    }
-
-    /**
-     * Retrieve quote object model
-     *
-     * @return Mage_Sales_Model_Quote
-     */
-    public function getQuote()
-    {
-        if (!$this->_quote) {
-            $this->_quote = $this->getSession()->getQuote();
-        }
-        return $this->_quote;
-    }
-
-    /**
-     * Initialize data for price rules
-     *
-     * @return Mage_Adminhtml_Model_Sales_Order_Create
-     */
-    public function initRuleData()
-    {
-        $store = $this->_session->getStore();
-        Mage::register('rule_data', new Varien_Object(array(
-            'store_id'  => $store->getId(),
-            'website_id'  => $store->getWebsiteId(),
-            'customer_group_id' => $this->getCustomerGroupId(),
-        )));
-        return $this;
-    }
-
-    /**
-     * get customer group id
-     *
-     * @return int
-     */
-    public function getCustomerGroupId()
-    {
-        $groupId = $this->getQuote()->getCustomerGroupId();
-        if (!$groupId) {
-            $groupId = $this->getSession()->getCustomerGroupId();
-        }
-        return $groupId;
     }
 
     /**
@@ -123,7 +70,6 @@ class Oggetto_OneClick_Model_Order extends Mage_Core_Model_Abstract
         }
         $session->setStoreId($order->getStoreId());
 
-        //Notify other modules about the session quote
         Mage::dispatchEvent('init_from_order_session_quote_initialized',
             array('session_quote' => $session));
 

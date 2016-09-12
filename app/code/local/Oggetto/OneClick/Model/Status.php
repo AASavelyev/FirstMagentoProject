@@ -23,37 +23,47 @@
  */
 
 /**
- * One click order collection
+ * status model
  *
  * @category   Oggetto
  * @package    Oggetto_OneClick
  * @author     Alexander Savelyev <asavelyev@oggettoweb.com>
  */
-class Oggetto_OneClick_Model_Resource_OneClickOrder_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Oggetto_OneClick_Model_Status extends Mage_Core_Model_Abstract
 {
+    const NEW_STATUS = 1;
+    const REJECTED_STATUS = 2;
+    const HANDLED_STATUS = 3;
+
     /**
-     * init collection of one click orders
+     * Get option text
      *
-     * @return void
+     * @param int $value value of status
+     * @return string
      */
-    protected function _construct()
+    public function getOptionText($value)
     {
-        $this->_init('oggetto_oneClick/oneClickOrder');
+        switch ($value) {
+            case self::NEW_STATUS:
+                return 'New';
+            case self::REJECTED_STATUS:
+                return 'Rejected';
+            case self::HANDLED_STATUS:
+                return 'Handled';
+        }
     }
 
     /**
-     * filter by state name
+     * get options
      *
-     * @param string $value value of state
-     * @return Oggetto_Question_Model_Resource_Question_Collection
+     * @return array
      */
-    public function addStateNameFilter($value)
+    public function toOptionArray()
     {
-        try {
-            $this->getSelect()->where('main_table.state = ?', $value);
-        } catch (Exception $e) {
-            Mage::logException($e);
-        }
-        return $this;
+        return [
+            self::NEW_STATUS => 'New',
+            self::REJECTED_STATUS => 'Rejected',
+            self::HANDLED_STATUS => 'Handled'
+        ];
     }
 }

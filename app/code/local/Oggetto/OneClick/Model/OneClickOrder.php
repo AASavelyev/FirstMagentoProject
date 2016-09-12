@@ -54,11 +54,15 @@ class Oggetto_OneClick_Model_OneClickOrder extends Mage_Core_Model_Abstract
      */
     public function saveOrder($data)
     {
-        $this->setData($data)
-            ->setDate(date('Y-m-d H:i:s'))
-            ->setState(self::NEW_STATUS)
-            ->setStoreId(Mage::helper('oggetto_oneClick')->getStoreId())
-            ->save();
+        try {
+            $this->setData($data)
+                ->setDate(date('Y-m-d H:i:s'))
+                ->setState(self::NEW_STATUS)
+                ->setStoreId(Mage::helper('oggetto_oneClick')->getStoreId())
+                ->save();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 
     /**
@@ -69,7 +73,11 @@ class Oggetto_OneClick_Model_OneClickOrder extends Mage_Core_Model_Abstract
      */
     public function cancelOrder($id)
     {
-        $this->load($id)->setState(self::REJECTED_STATUS)->save();
+        try {
+            $this->load($id)->setState(self::REJECTED_STATUS)->save();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 
     /**
@@ -80,6 +88,10 @@ class Oggetto_OneClick_Model_OneClickOrder extends Mage_Core_Model_Abstract
      */
     public function handleOrder($id)
     {
-        $this->load($id)->setState(self::HANDLED_STATUS)->save();
+        try {
+            $this->load($id)->setState(self::HANDLED_STATUS)->save();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 }

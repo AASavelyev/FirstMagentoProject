@@ -49,19 +49,10 @@ class Oggetto_OneClick_Model_Resource_OneClickLog_Collection extends Mage_Core_M
      */
     public function getByOrderId($orderId)
     {
-        return $this->addFieldToFilter('main_table.order_id', $orderId);
-    }
-
-    /**
-     * add new field - is_answered to question
-     *
-     * @return Oggetto_Question_Model_Resource_Question_Collection
-     */
-    public function addStatusName()
-    {
-        $this->getSelect()
-            ->columns(new Zend_Db_Expr(
-                "CASE state WHEN 1 THEN 'New' WHEN 2 THEN 'Rejected' WHEN 3 THEN 'Handled' END as stateName"));
-        return $this;
+        try {
+            return $this->addFieldToFilter('main_table.order_id', $orderId);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 }

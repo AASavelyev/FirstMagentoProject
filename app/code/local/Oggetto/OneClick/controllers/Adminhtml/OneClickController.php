@@ -49,10 +49,16 @@ class Oggetto_OneClick_Adminhtml_OneClickController extends Mage_Adminhtml_Contr
      */
     public function editAction()
     {
-        $id = $this->getRequest()->getParam('id');
-        $model = Mage::getModel('oggetto_oneClick/oneClickOrder')->load($id);
-        $this->_setModelProductInfo($model);
-        Mage::register('oneClick_orderInfo', $model);
+        try
+        {
+            $id = $this->getRequest()->getParam('id');
+            $model = Mage::getModel('oggetto_oneClick/oneClickOrder')->load($id);
+            $this->_setModelProductInfo($model);
+            Mage::register('oneClick_orderInfo', $model);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -96,7 +102,7 @@ class Oggetto_OneClick_Adminhtml_OneClickController extends Mage_Adminhtml_Contr
         try {
             Mage::getModel('oggetto_oneClick/oneClickOrder')->cancelOrder($params['order_id']);
             Mage::getModel('oggetto_oneClick/oneClickLog')
-                ->log($params['order_id'], $params['comment'], Oggetto_OneClick_Model_OneClickOrder::REJECTED_STATUS);
+                ->log($params['order_id'], $params['comment'], Oggetto_OneClick_Model_Status::REJECTED_STATUS);
         } catch (Exception $e) {
             Mage::logException($e);
         }
@@ -110,10 +116,13 @@ class Oggetto_OneClick_Adminhtml_OneClickController extends Mage_Adminhtml_Contr
      */
     public function saveAction()
     {
-        $orderId = $this->getRequest()->getParam('order_id');
-        $order = Mage::getModel('oggetto_oneClick/oneClickOrder')->load($orderId);
-        Mage::getModel('oggetto_oneClick/order')->initFromOrder($order);
-
+        try {
+            $orderId = $this->getRequest()->getParam('order_id');
+            $order = Mage::getModel('oggetto_oneClick/oneClickOrder')->load($orderId);
+            Mage::getModel('oggetto_oneClick/order')->initFromOrder($order);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
         $this->_redirect('/sales_order_create/');
     }
 }

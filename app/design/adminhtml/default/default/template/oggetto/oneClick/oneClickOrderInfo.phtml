@@ -19,7 +19,7 @@
                         <tr>
                             <td><?php echo $log->getUsername(); ?></td>
                             <td><?php echo $log->getDate(); ?></td>
-                            <td><?php echo $log->getData('stateName'); ?></td>
+                            <td><?php echo $log->getStatusText($log->getState()); ?></td>
                             <td><?php echo $log->getComment(); ?></td>
                         </tr>
                     <?php endforeach; ?>

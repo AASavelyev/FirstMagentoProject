@@ -46,7 +46,7 @@ class Oggetto_OneClick_Model_Observer
                 Mage::getModel('oggetto_oneClick/oneClickLog')->log(
                     $orderId,
                     Oggetto_OneClick_Model_OneClickOrder::CREATE_ORDER_MESSAGE . $orderId,
-                    Oggetto_OneClick_Model_OneClickOrder::HANDLED_STATUS
+                    Oggetto_OneClick_Model_Status::HANDLED_STATUS
                 );
             } catch (Exception $e) {
                 Mage::logException($e);

@@ -52,10 +52,15 @@ class Oggetto_OneClick_Model_OneClickLog extends Mage_Core_Model_Abstract
      */
     public function saveLog($orderId)
     {
-        $this->setOrderId($orderId)
-            ->setDate(date('Y-m-d H:i:s'))
-            ->setState(self::NEW_STATUS)
-            ->save();
+        try {
+            $this->setOrderId($orderId)
+                ->setDate(Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s'))
+                ->setState(self::NEW_STATUS)
+                ->save();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
     }
 
     /**
@@ -68,11 +73,26 @@ class Oggetto_OneClick_Model_OneClickLog extends Mage_Core_Model_Abstract
      */
     public function log($orderId, $comment, $state)
     {
-        $this->setOrderId($orderId)
-            ->setDate(date('Y-m-d H:i:s'))
-            ->setState($state)
-            ->setUsername(Mage::helper('oggetto_oneClick/user')->getAdminName())
-            ->setComment($comment)
-            ->save();
+        try {
+            $this->setOrderId($orderId)
+                ->setDate(Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s'))
+                ->setState($state)
+                ->setUsername(Mage::helper('oggetto_oneClick/user')->getAdminName())
+                ->setComment($comment)
+                ->save();
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+    }
+
+    /**
+     * get Status Text
+     *
+     * @param int $status status
+     * @return string
+     */
+    public function getStatusText($status)
+    {
+        return Mage::getModel('oggetto_oneClick/status')->getOptionText($status);
     }
 }

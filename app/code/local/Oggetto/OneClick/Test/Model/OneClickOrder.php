@@ -48,7 +48,7 @@ class Oggetto_OneClick_Test_Model_OneClickOrder extends EcomDev_PHPUnit_Test_Cas
         $modelMock->expects($this->once())->method('setData')->with($this->equalTo($data))->will($this->returnSelf());
         $modelMock->expects($this->once())->method('setDate')->will($this->returnSelf());
         $modelMock->expects($this->once())->method('setState')
-            ->with(Oggetto_OneClick_Model_OneClickOrder::NEW_STATUS)->will($this->returnSelf());
+            ->with(Oggetto_OneClick_Model_Status::NEW_STATUS)->will($this->returnSelf());
         $modelMock->expects($this->once())->method('setStoreId')->with($this->equalTo(42))->will($this->returnSelf());
         $modelMock->expects($this->once())->method('save');
         $modelMock->saveOrder($data);
@@ -65,7 +65,7 @@ class Oggetto_OneClick_Test_Model_OneClickOrder extends EcomDev_PHPUnit_Test_Cas
         $modelMock = $this->getModelMock('oggetto_oneClick/oneClickOrder', ['load', 'setState', 'save']);
         $modelMock->expects($this->once())->method('load')->with($this->equalTo($id))->will($this->returnSelf());
         $modelMock->expects($this->once())->method('setState')
-            ->with($this->equalTo(Oggetto_OneClick_Model_OneClickOrder::REJECTED_STATUS))
+            ->with($this->equalTo(Oggetto_OneClick_Model_Status::REJECTED_STATUS))
             ->will($this->returnSelf());
         $modelMock->expects($this->once())->method('save');
 
@@ -83,7 +83,7 @@ class Oggetto_OneClick_Test_Model_OneClickOrder extends EcomDev_PHPUnit_Test_Cas
         $modelMock = $this->getModelMock('oggetto_oneClick/oneClickOrder', ['load', 'setState', 'save']);
         $modelMock->expects($this->once())->method('load')->with($this->equalTo($id))->will($this->returnSelf());
         $modelMock->expects($this->once())->method('setState')
-            ->with($this->equalTo(Oggetto_OneClick_Model_OneClickOrder::HANDLED_STATUS))
+            ->with($this->equalTo(Oggetto_OneClick_Model_Status::HANDLED_STATUS))
             ->will($this->returnSelf());
         $modelMock->expects($this->once())->method('save');
 
