@@ -35,18 +35,19 @@ class Oggetto_Payment_Model_PaymentApi_Payment extends Mage_Core_Model_Abstract
     const SUCCESS_STATUS = 1;
     const ERROR_STATUS = 2;
     const PAYMENT_REPORT_URL = 'http://office.oggettoweb.com:12345/payment/standard/checkPayment';
+    const SUCCESS_RESPONSE = 200;
     /**
      * check is valid request
      *
      * @param array $postData request which was sent by oggetto payment system
+     * @param Order $order    request which was sent by oggetto payment system
      * @return bool
      */
-    public function checkValidRequest($postData)
+    public function checkValidRequest($postData, $order)
     {
-        if (http_response_code() == 200) {
-            $order = Mage::getModel('sales/order')->load($postData['order_id']);
-            if ($order != null) {
-                return str_replace('.', ',', $order->getBaseGrandTotal()) == $postData['total']
+        if (http_response_code() == self::SUCCESS_RESPONSE) {
+            if ($order->getId()) {
+                return number_format($order->getBaseGrandTotal(), 4, ',', '') == $postData['total']
                 && $postData['status'] == self::SUCCESS_STATUS
                 && $this->getHashFromArray($postData) == $postData['hash'];
             }
@@ -72,9 +73,9 @@ class Oggetto_Payment_Model_PaymentApi_Payment extends Mage_Core_Model_Abstract
         }
 
         $paymentInfo = [
-            'total'              => str_replace('.', ',', $order->getBaseGrandTotal()),
+            'total'              => number_format($order->getBaseGrandTotal(), 4, ',', ''),
             'order_id'           => $order->getEntityId(),
-            'items'              => join(',', $items),
+            'items'              => implode(',', $items),
             'success_url'        => Mage::helper('oggetto_payment')->getPaymentUrl('success'),
             'error_url'          => Mage::helper('oggetto_payment')->getPaymentUrl('error'),
             'payment_report_url' => self::PAYMENT_REPORT_URL
@@ -91,16 +92,16 @@ class Oggetto_Payment_Model_PaymentApi_Payment extends Mage_Core_Model_Abstract
      */
     private function getHashFromArray($request)
     {
-        $key = Mage::helper('oggetto_payment')->getSecretPaymentKey();
+        $secretKey = Mage::helper('oggetto_payment')->getSecretPaymentKey();
         ksort($request);
-        $signatureArray = array();
+        $signatureArray = [];
 
-        foreach ($request as $x => $value) {
+        foreach ($request as $key => $value) {
             // check that key doesn't equal hash
-            if ($x != 'hash') {
-                $signatureArray[] = $x . ':' . $value;
+            if ($key != 'hash') {
+                $signatureArray[] = $key . ':' . $value;
             }
         }
-        return md5(join('|', $signatureArray) . '|' . $key);
+        return md5(join('|', $signatureArray) . '|' . $secretKey);
     }
 }

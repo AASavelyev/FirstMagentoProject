@@ -70,15 +70,14 @@ class Oggetto_Payment_Model_Invoice extends Mage_Core_Model_Abstract
     /**
      * Update invoice's status by order
      *
-     * @param int $orderId order
-     * @param int $status  invoice's status
+     * @param int   $status invoice's status
+     * @param Order $order  order
      * @return void
      */
-    public function setInvoiceStatus($orderId, $status)
+    public function setInvoiceStatus($status, $order)
     {
-        $order = Mage::getModel('sales/order')->load($orderId);
         $invoiceModel = Mage::getModel('sales/order_invoice');
-        $invoice = $invoiceModel->load($order->getInvoiceCollection()->getAllIds()[0]);
+        $invoice = $invoiceModel->load($order->getInvoiceCollection()->getFirstItem());
         $invoice->setState($status)->save();
     }
 }
